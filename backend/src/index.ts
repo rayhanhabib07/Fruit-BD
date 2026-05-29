@@ -19,8 +19,9 @@ const PORT = process.env.PORT ?? 5000;
 app.use('/api/payments/webhook/stripe', express.raw({ type: 'application/json' }));
 
 // Middleware
+const allowedOrigin = (process.env.FRONTEND_URL ?? 'http://localhost:3000').trim().replace(/\/$/, '');
 app.use(cors({
-  origin: process.env.FRONTEND_URL ?? 'http://localhost:3000',
+  origin: allowedOrigin,
   credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
